@@ -1,0 +1,33 @@
+spring:
+  profiles:
+    active: prod
+    
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
+      
+logging:
+  level:
+    root: WARN
+    com.angel: INFO
+  pattern:
+    console: '{"timestamp":"%d","level":"%level","logger":"%logger","message":"%msg"}%n'
+    
+angel:
+  collectors:
+    mock-mode: false
+  performance:
+    thread-pool:
+      core-size: 20
+      max-size: 100
+  cache:
+    redis:
+      cluster:
+        enabled: true

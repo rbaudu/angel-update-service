@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angel-update-service
+  namespace: angel-update-dev
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: angel-update-service
+  template:
+    metadata:
+      labels:
+        app: angel-update-service
+    spec:
+      containers:
+      - name: angel-update-service
+        image: angel-update-service:dev
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "dev"
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: angel-update-secrets
+              key: db-password
+        - name: WEATHER_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: angel-update-secrets
+              key: weather-api-key
+        volumeMounts:
+        - name: config
+          mountPath: /app/config
+        - name: data
+          mountPath: /data
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 5
+      volumes:
+      - name: config
+        configMap:
+          name: angel-update-config
+      - name: data
+        hostPath:
+          path: /tmp/angel-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: angel-update-service
+  namespace: angel-update-dev
+spec:
+  selector:
+    app: angel-update-service
+  ports:
+  - port: 8080
+    targetPort: 8080
+  type: ClusterIP

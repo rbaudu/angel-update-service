@@ -1,0 +1,21 @@
+# Development Dockerfile with hot reload and debugging
+FROM maven:3.9-eclipse-temurin-17 AS builder
+WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# Runtime stage
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
+COPY --from=builder /app/target/*.jar app.jar
+
+# Create directories
+RUN mkdir -p /data /cache/zips
+
+# Enable remote debugging
+ENV JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+
+EXPOSE 8080 5005
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]

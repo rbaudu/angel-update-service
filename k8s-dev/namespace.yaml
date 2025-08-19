@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: angel-update-dev
+  labels:
+    name: angel-update-dev
+    environment: development
