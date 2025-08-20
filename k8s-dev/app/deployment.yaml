@@ -4,7 +4,7 @@ metadata:
   name: angel-update-service
   namespace: angel-update-dev
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: angel-update-service
@@ -32,6 +32,16 @@ spec:
             secretKeyRef:
               name: angel-update-secrets
               key: weather-api-key
+        - name: JAVA_OPTS
+          value: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UnlockExperimentalVMOptions -XX:+UseZGC"
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:postgresql://postgres-service:5432/angeldb"
+        - name: SPRING_DATASOURCE_USERNAME
+          value: "angel"
+        - name: SPRING_REDIS_HOST
+          value: "redis-service"
+        - name: SPRING_REDIS_PORT
+          value: "6379"
         volumeMounts:
         - name: config
           mountPath: /app/config
@@ -48,14 +58,18 @@ spec:
           httpGet:
             path: /actuator/health
             port: 8080
-          initialDelaySeconds: 60
-          periodSeconds: 10
+          initialDelaySeconds: 300  # 5 minutes pour le démarrage Spring Boot + Flyway
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
         readinessProbe:
           httpGet:
             path: /actuator/health/readiness
             port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 5
+          initialDelaySeconds: 240  # 4 minutes avant de vérifier
+          periodSeconds: 15
+          timeoutSeconds: 5
+          failureThreshold: 10
       volumes:
       - name: config
         configMap:

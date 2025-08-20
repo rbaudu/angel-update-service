@@ -20,8 +20,11 @@ echo "💾 Deploying Redis..."
 kubectl apply -f k8s-dev/redis/
 
 echo "⏳ Waiting for databases to be ready..."
-kubectl wait --for=condition=ready pod -l app=postgres -n angel-update-dev --timeout=60s
+echo "  - Waiting for PostgreSQL (this may take a few minutes for first deployment)..."
+kubectl wait --for=condition=ready pod -l app=postgres -n angel-update-dev --timeout=300s
+echo "  - Waiting for Redis..."
 kubectl wait --for=condition=ready pod -l app=redis -n angel-update-dev --timeout=60s
+echo "✅ Databases are ready!"
 
 echo "🚀 Deploying application..."
 kubectl apply -f k8s-dev/app/

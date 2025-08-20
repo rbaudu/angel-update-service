@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mvn:*)",
+      "Bash(kubectl get pods:*)",
+      "Bash(kubectl describe:*)",
+      "Bash(kubectl get:*)",
+      "Bash(kubectl apply:*)",
+      "Bash(kubectl delete:*)",
+      "Bash(kubectl logs:*)",
+      "Bash(kubectl rollout restart:*)",
+      "Bash(timeout 30 kubectl logs angel-update-service-676df6965d-5wdqc -n angel-update-dev -f)",
+      "Bash(timeout 30 kubectl logs angel-update-service-8459997d8d-mkrqk -n angel-update-dev -f)",
+      "Bash(kubectl scale:*)",
+      "Bash(kubectl exec:*)",
+      "Bash(timeout:*)",
+      "Bash(.scriptsbuild-and-deploy.sh)",
+      "Bash(./scripts/build-and-deploy.sh:*)",
+      "Bash(mkdir:*)",
+      "Bash(rm:*)",
+      "Bash(kubectl:*)",
+      "Bash(docker build:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

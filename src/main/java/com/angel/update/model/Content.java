@@ -65,6 +65,9 @@ public class Content {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
     
+    @Column(name = "last_modified")
+    private LocalDateTime lastModified;
+    
     private LocalDateTime publishedAt;
     
     private LocalDateTime expiresAt;

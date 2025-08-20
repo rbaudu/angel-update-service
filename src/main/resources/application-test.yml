@@ -1,6 +1,10 @@
+server:
+  port: 0  # Port aléatoire pour les tests
+
 spring:
-  profiles:
-    active: test
+  config:
+    activate:
+      on-profile: test
     
   datasource:
     url: jdbc:h2:mem:testdb
@@ -12,9 +16,12 @@ spring:
     hibernate:
       ddl-auto: create-drop
     database-platform: org.hibernate.dialect.H2Dialect
+  
+  flyway:
+    enabled: false  # Désactivé pour les tests, on utilise create-drop
     
   redis:
-    host: localhost
+    host: redis
     port: 6379
     
 angel:

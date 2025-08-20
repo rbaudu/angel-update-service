@@ -1,0 +1,19 @@
+server:
+  port: 8080  # Changer ce port selon vos besoins
+
+spring:
+  profiles:
+    active: dev
+  
+  application:
+    name: angel-update-service
+
+# Configuration commune à tous les profils
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always

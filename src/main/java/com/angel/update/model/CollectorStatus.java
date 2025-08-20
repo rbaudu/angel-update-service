@@ -1,7 +1,9 @@
 package com.angel.update.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
@@ -9,6 +11,8 @@ import java.time.LocalDateTime;
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CollectorStatus {
     
     private String id;
@@ -17,17 +21,17 @@ public class CollectorStatus {
     
     private String type;
     
-    private boolean enabled;
+    private Status status;
     
-    private String schedule;
+    private String message;
     
     private LocalDateTime lastRun;
     
     private LocalDateTime nextRun;
     
-    private Status status;
+    private boolean enabled;
     
-    private String lastError;
+    private String schedule;
     
     private long successCount;
     
@@ -37,7 +41,17 @@ public class CollectorStatus {
     
     private long lastExecutionTime;
     
+    private String lastError;
+    
+    public CollectorStatus(String name, String type, Status status, String message, LocalDateTime lastRun) {
+        this.name = name;
+        this.type = type;
+        this.status = status;
+        this.message = message;
+        this.lastRun = lastRun;
+    }
+    
     public enum Status {
-        IDLE, RUNNING, SUCCESS, ERROR, DISABLED
+        IDLE, INACTIVE, ACTIVE, RUNNING, SUCCESS, ERROR, DISABLED
     }
 }

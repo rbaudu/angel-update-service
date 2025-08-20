@@ -36,8 +36,8 @@ public class AppConfig {
         
         @Data
         public static class RedisConfig {
-            private String host = "localhost";
-            private int port = 6379;
+            private String host;
+            private int port;
             private String password;
             private Map<String, Integer> ttl = Map.of(
                 "news", 3600,

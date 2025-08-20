@@ -9,6 +9,7 @@ import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ScheduledFuture;
@@ -95,7 +96,7 @@ public class CollectorService {
         status.setStatus(CollectorStatus.Status.RUNNING);
         status.setLastRun(LocalDateTime.now());
         
-        taskScheduler.execute(() -> {
+        taskScheduler.schedule(() -> {
             try {
                 long startTime = System.currentTimeMillis();
                 collector.collect();
@@ -115,7 +116,7 @@ public class CollectorService {
                 
                 log.error("Error executing collector {}", id, e);
             }
-        });
+        }, Instant.now());
     }
     
     /**

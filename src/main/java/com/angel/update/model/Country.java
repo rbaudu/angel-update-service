@@ -4,9 +4,13 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
+import io.hypersistence.utils.hibernate.type.json.JsonType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Entité représentant un pays
@@ -32,23 +36,19 @@ public class Country {
     
     private String timezone;
     
-    private String currency;
+    private String continent;
+    
+    private Boolean active = true;
+    
+    @Type(JsonType.class)
+    @Column(columnDefinition = "jsonb")
+    private Map<String, Object> metadata = new HashMap<>();
     
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Region> regions = new ArrayList<>();
     
-    private String capital;
-    
-    private String continent;
-    
-    private Integer population;
-    
-    private Boolean active = true;
-    
-    @Column(name = "phone_code")
-    private String phoneCode;
-    
     @ElementCollection
-    @CollectionTable(name = "country_languages")
+    @CollectionTable(name = "country_languages", joinColumns = @JoinColumn(name = "country_code"))
+    @Column(name = "official_languages")
     private List<String> officialLanguages = new ArrayList<>();
 }

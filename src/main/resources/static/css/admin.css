@@ -1,0 +1,290 @@
+/* Admin Interface Styles */
+
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sidebar */
+.list-group-item {
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #e9ecef;
+    transform: translateX(5px);
+}
+
+.list-group-item.active {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+/* Cards */
+.card {
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: box-shadow 0.15s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* Status badges */
+.status-badge {
+    font-size: 0.75rem;
+    padding: 0.375rem 0.75rem;
+}
+
+.status-active {
+    background-color: #198754;
+}
+
+.status-inactive {
+    background-color: #6c757d;
+}
+
+.status-error {
+    background-color: #dc3545;
+}
+
+.status-running {
+    background-color: #fd7e14;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+/* Tables */
+.table th {
+    border-top: none;
+    font-weight: 600;
+    color: #495057;
+    background-color: #f8f9fa;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(13, 110, 253, 0.075);
+}
+
+/* Buttons */
+.btn {
+    border-radius: 0.375rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* Stats cards animations */
+.card.bg-primary, .card.bg-success, .card.bg-info, .card.bg-warning {
+    transition: transform 0.3s ease;
+}
+
+.card.bg-primary:hover, .card.bg-success:hover, .card.bg-info:hover, .card.bg-warning:hover {
+    transform: scale(1.05);
+}
+
+/* Activity feed */
+.activity-item {
+    border-left: 3px solid #dee2e6;
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+    position: relative;
+}
+
+.activity-item::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 0;
+    width: 9px;
+    height: 9px;
+    background-color: #0d6efd;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+.activity-item.success::before {
+    background-color: #198754;
+}
+
+.activity-item.error::before {
+    background-color: #dc3545;
+}
+
+.activity-item.warning::before {
+    background-color: #ffc107;
+}
+
+/* Logs container */
+#logs-container {
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+.log-entry {
+    margin-bottom: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.log-entry.error {
+    background-color: rgba(220, 53, 69, 0.1);
+    border-left: 3px solid #dc3545;
+}
+
+.log-entry.warn {
+    background-color: rgba(255, 193, 7, 0.1);
+    border-left: 3px solid #ffc107;
+}
+
+.log-entry.info {
+    background-color: rgba(13, 202, 240, 0.1);
+    border-left: 3px solid #0dcaf0;
+}
+
+.log-entry.debug {
+    background-color: rgba(108, 117, 125, 0.1);
+    border-left: 3px solid #6c757d;
+}
+
+/* Progress bars */
+.progress {
+    height: 0.5rem;
+    background-color: #e9ecef;
+}
+
+.progress-bar {
+    transition: width 0.6s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container-fluid {
+        padding: 0.5rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .btn-group .btn {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Loading spinner */
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+/* Alerts */
+.alert {
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.alert-dismissible .btn-close {
+    padding: 0.75rem 1rem;
+}
+
+/* Collector status indicators */
+.collector-status {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.collector-status.active {
+    background-color: #198754;
+    box-shadow: 0 0 0 0 rgba(25, 135, 84, 1);
+    animation: pulse-green 2s infinite;
+}
+
+.collector-status.inactive {
+    background-color: #6c757d;
+}
+
+.collector-status.error {
+    background-color: #dc3545;
+    animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-green {
+    0% { box-shadow: 0 0 0 0 rgba(25, 135, 84, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(25, 135, 84, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(25, 135, 84, 0); }
+}
+
+@keyframes pulse-red {
+    0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+}
+
+/* Cache statistics */
+.cache-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.cache-stat:last-child {
+    border-bottom: none;
+}
+
+.cache-stat-value {
+    font-weight: 600;
+    color: #0d6efd;
+}
+
+/* Upload progress */
+.upload-progress {
+    position: relative;
+    background-color: #e9ecef;
+    border-radius: 0.25rem;
+    height: 1.5rem;
+    margin-top: 1rem;
+}
+
+.upload-progress-bar {
+    height: 100%;
+    background-color: #0d6efd;
+    border-radius: 0.25rem;
+    transition: width 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 500;
+}

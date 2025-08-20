@@ -14,8 +14,8 @@ COPY --from=builder /app/target/*.jar app.jar
 # Create directories
 RUN mkdir -p /data /cache/zips
 
-# Enable remote debugging
-ENV JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+# Enable remote debugging (non-blocking)
+ENV JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Dspring.profiles.active=dev"
 
 EXPOSE 8080 5005
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]

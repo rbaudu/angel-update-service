@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init
+  namespace: angel-update-dev
+data:
+  init.sql: |
+    -- Configuration PostgreSQL de base pour ANGEL Update Service
+    -- Ce script est exécuté au démarrage de PostgreSQL pour les environnements de développement
+    -- Le schéma des tables sera géré par Flyway via les migrations
+    
+    -- Configuration de base de PostgreSQL
+    ALTER SYSTEM SET shared_preload_libraries = 'pg_stat_statements';
+    ALTER SYSTEM SET log_statement = 'all';
+    ALTER SYSTEM SET log_min_duration_statement = 1000;
+    
+    -- Extensions nécessaires
+    CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+    CREATE EXTENSION IF NOT EXISTS "pg_stat_statements";
+    
+    -- Création de l'utilisateur et base si nécessaire (pour dev uniquement)
+    -- Ces commandes sont ignorées si l'utilisateur/base existe déjà
+    SELECT 'CREATE DATABASE angel_update' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'angel_update')\gexec
+    
+    -- Log de fin d'initialisation
+    SELECT pg_notify('angel_db_ready', 'PostgreSQL configuration completed, Flyway will handle schema');

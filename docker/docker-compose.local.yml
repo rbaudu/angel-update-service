@@ -7,10 +7,9 @@ services:
     environment:
       POSTGRES_DB: angeldb
       POSTGRES_USER: angel
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:changeme123}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
     healthcheck:
@@ -51,7 +50,7 @@ services:
       DB_PORT: 5432
       DB_NAME: angeldb
       DB_USER: angel
-      DB_PASSWORD: ${DB_PASSWORD:-changeme}
+      DB_PASSWORD: ${DB_PASSWORD:changeme123}
       REDIS_HOST: redis
       REDIS_PORT: 6379
       JAVA_OPTS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005

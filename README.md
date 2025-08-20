@@ -85,6 +85,17 @@ minikube start --cpus=4 --memory=8192
 # Application disponible sur http://localhost:8080
 ```
 
+Note : si minkube a déjà été utilisé avec un autre cluster, le changement de cpus et memoire ne sera pa spossible sans d'abord supprimé le cluster existant (minikube ne gère qu'un seul cluster, d'où le "mini") :
+
+```bash
+# Arrêter et supprimer le cluster Minikube actuel
+minikube stop
+ minikube delete
+ # Créer un nouveau cluster avec 4 CPUs et 8GB de RAM
+minikube start --cpus=4 --memory=8192
+```
+
+
 ## 📁 Structure du Projet
 
 ```
@@ -186,31 +197,3 @@ mvn verify
 k6 run scripts/load-test.js
 ```
 
-## 🤝 Contribution
-
-Les contributions sont les bienvenues ! Merci de :
-
-1. Fork le projet
-2. Créer une branche feature (`git checkout -b feature/AmazingFeature`)
-3. Commit vos changements (`git commit -m 'Add AmazingFeature'`)
-4. Push vers la branche (`git push origin feature/AmazingFeature`)
-5. Ouvrir une Pull Request
-
-## 📄 License
-
-Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
-
-## 👤 Auteur
-
-**rbaudu**
-- GitHub: [@rbaudu](https://github.com/rbaudu)
-
-## 🙏 Remerciements
-
-- Spring Boot Team
-- Kubernetes Community
-- Contributeurs Open Source
-
----
-
-⭐ N'hésitez pas à mettre une étoile si ce projet vous aide !

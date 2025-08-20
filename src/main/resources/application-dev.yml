@@ -1,6 +1,35 @@
+server:
+  port: 8080  # Port pour développement
+
 spring:
-  profiles:
-    active: dev
+  config:
+    activate:
+      on-profile: dev
+
+  security:
+    user:
+      name: admin
+      password: dev-password-123
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://postgres-service:5432/angeldb}
+    username: ${SPRING_DATASOURCE_USERNAME:angel}
+    password: ${DB_PASSWORD:changeme123}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+  
+  redis:
+    host: ${SPRING_REDIS_HOST:redis-service}
+    port: ${SPRING_REDIS_PORT:6379}
+    timeout: 2000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
     
   jpa:
     hibernate:
@@ -9,10 +38,16 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  
+  # Configuration Flyway pour schema existant
+  flyway:
+    baseline-on-migrate: true
+    baseline-version: 0
+    enabled: true
         
   devtools:
     restart:
-      enabled: true
+      enabled: false
     livereload:
       enabled: true
       
@@ -25,10 +60,25 @@ logging:
     
 angel:
   collectors:
+    enabled: false  # Désactiver les collecteurs pour le debug
     mock-mode: true
   cache:
+    redis:
+      enabled: true  # Activer Redis si disponible
+      host: ${SPRING_REDIS_HOST:redis-service}
+      port: ${SPRING_REDIS_PORT:6379}
     ttl:
       news: 300
       weather: 180
       recipes: 600
       stories: 1800
+
+# Configuration de debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env
+  endpoint:
+    health:
+      show-details: always
