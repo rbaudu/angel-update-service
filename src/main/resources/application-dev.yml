@@ -60,8 +60,12 @@ logging:
     
 angel:
   collectors:
-    enabled: false  # Désactiver les collecteurs pour le debug
-    mock-mode: true
+    enabled: true  # Activer les collecteurs
+    mock-mode: false
+    collectors:
+      GoogleNewsCollector:
+        enabled: true
+        schedule: "0 */30 * * * *"  # Toutes les 30 minutes
   cache:
     redis:
       enabled: true  # Activer Redis si disponible
